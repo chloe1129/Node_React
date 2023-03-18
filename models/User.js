@@ -33,4 +33,4 @@ const userSchema = mongoose.Schema({
 
 const User = mongoose.model("User", userSchema);
 
-module.exports = {}; // able to use User model in other file
+module.exports = { User }; // able to use User model in other file
