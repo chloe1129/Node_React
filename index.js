@@ -28,7 +28,7 @@ mongoose
   .catch((err) => console.log(err));
 
 app.get("/", (req, res) => {
-  res.send("Hello World! 나는 이채현");
+  res.send("Hello World! 나는 이채현, 탐정이죠");
 });
 
 app.post("/register", async (req, res) => {
