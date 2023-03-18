@@ -3,6 +3,9 @@ const app = express(); // new express app
 const port = 3000; // my backend server port
 
 const bodyParser = require("body-parser");
+
+const config = require("./config/key");
+
 const { User } = require("./models/User");
 
 // application/x-www-form-urlencoded
@@ -15,15 +18,10 @@ app.use(bodyParser.json());
 
 const mongoose = require("mongoose");
 mongoose
-  .connect(
-    "mongodb+srv://chloe:a1234@atlascluster.vwk8mbf.mongodb.net/?retryWrites=true&w=majority",
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      //useCreateIndex: true,
-      //useFindAndModify: false,
-    }
-  )
+  .connect(config.mongoURI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => console.log("MongoDB connected!!"))
   .catch((err) => console.log(err));
 
