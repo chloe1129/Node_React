@@ -54,8 +54,18 @@ userSchema.pre("save", function (next) {
         next();
       });
     });
+  } else {
+    // not changing the password
+    next();
   }
 });
+
+userSchema.methods.comparePassword = function (plaiinPassword, cb) {
+  // compare plain password with encrypted password in database
+  bcrypt.compare(plaiinPassword, this.password, function (err, isMatch) {
+    if (err) return cb(err), cb(null, isMatch);
+  });
+};
 
 const User = mongoose.model("User", userSchema);
 

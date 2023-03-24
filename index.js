@@ -49,6 +49,28 @@ app.post("/register", async (req, res) => {
     });
 });
 
+app.post("/login", (req, res) => {
+  // find the requested email from database
+  User.findOne({ email: req.body.email }, (err, user) => {
+    // if there is no user matching this email
+    if (!user) {
+      return res.json({
+        loginSuccess: false,
+        message: "No account matching",
+      });
+    }
+
+    // if email is same, check if the password word is also correct
+    user.comparePassword(req.body.password, (err, isMatch) => {
+      if (!isMatch)
+        return res.json({ loginSuccess: false, message: "Wrong Password" });
+
+      // if the pw is correct, then generate the token
+      user.generateToken((err, user) => {});
+    });
+  });
+});
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
